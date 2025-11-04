@@ -134,7 +134,37 @@ const Settings = ({ uploadedFile, fileDataURL }: SettingsProps) => {
       <h1 className="text-white my-10 text-3xl">Convert To</h1>
       
       {/* File Info */}
-      
+      {uploadedFile && (
+        <div className="mb-6 p-4 bg-gray-800 rounded-lg">
+          <p className="text-white text-lg">File: {uploadedFile.name}</p>
+          <p className="text-gray-300">Size: {formatFileSize(uploadedFile.size)}</p>
+          
+          {/* لینک دانلود فایل اصلی */}
+        
+          
+          {/* لینک دانلود فایل تبدیل شده */}
+          {convertedFileURL && conversionStatus === "success" && (
+            <div className="mt-2">
+              <a
+                href={convertedFileURL}
+                download={`converted.${selectedFormat}`}
+                className="text-green-400 hover:text-green-300 underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ✅ Download Converted File ({selectedFormat.toUpperCase()})
+              </a>
+            </div>
+          )}
+
+          {/* نمایش خطا */}
+          {errorMessage && conversionStatus === "error" && (
+            <div className="mt-2 p-2 bg-red-900 text-red-200 rounded">
+              Error: {errorMessage}
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="grid grid-cols-5 gap-5">
         {ext.map((item) => {

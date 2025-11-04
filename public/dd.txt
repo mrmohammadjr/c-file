@@ -1,21 +1,21 @@
-"use server";
+const fileInput = document.getElementById("fileInput");
+const downloadLink = document.getElementById("downloadLink");
 
-export async function convertFileWithCloudConvert(
-  outputFormat: string,
-  uploadedFile: File | null
-) {
-  if (!uploadedFile) {
-    throw new Error("Missing file upload");
+fileInput.addEventListener("change", function (event) {
+  const file = event.target.files[0]; // اولین فایل انتخاب شده
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+      const dataURL = e.target.result;
+      console.log(dataURL) // URL داده‌ای
+      downloadLink.href = dataURL; // لینک را به URL داده‌ای تنظیم می‌کنیم
+      downloadLink.download = file.name; // نام فایل برای دانلود
+      downloadLink.style.display = "block"; // نمایش لینک
+      downloadLink.textContent = "دانلود " + file.name; // متن لینک
+    };
+
+    reader.readAsDataURL(file); // خواندن فایل به عنوان داده URL
   }
-
-  const arrayBuffer = await uploadedFile.arrayBuffer()
-  const buffer = Buffer.from(arrayBuffer)
-
-  const fs = await import('fs')
-  const path = await import('path')
-  const uploadsDir = path.join(process.cwd(), 'uploads')
-  await fs.promises.mkdir(uploadsDir, { recursive: true })
-  const filePath = path.join(uploadsDir, uploadedFile.name)
-  await fs.promises.writeFile(filePath, buffer)
-
-  console.log('Saved file to', filePath)
+});
