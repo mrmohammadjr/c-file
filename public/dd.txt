@@ -1,0 +1,21 @@
+"use server";
+
+export async function convertFileWithCloudConvert(
+  outputFormat: string,
+  uploadedFile: File | null
+) {
+  if (!uploadedFile) {
+    throw new Error("Missing file upload");
+  }
+
+  const arrayBuffer = await uploadedFile.arrayBuffer()
+  const buffer = Buffer.from(arrayBuffer)
+
+  const fs = await import('fs')
+  const path = await import('path')
+  const uploadsDir = path.join(process.cwd(), 'uploads')
+  await fs.promises.mkdir(uploadsDir, { recursive: true })
+  const filePath = path.join(uploadsDir, uploadedFile.name)
+  await fs.promises.writeFile(filePath, buffer)
+
+  console.log('Saved file to', filePath)
