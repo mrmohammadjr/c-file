@@ -150,7 +150,7 @@ const UploadFile = () => {
         className={`
           border-2 border-dashed rounded-lg p-8 text-center cursor-pointer
           transition-all duration-200 ease-in-out
-          hover:border-blue-400 hover:bg-blue-50 w-1/2
+          hover:border-blue-400 hover:bg-blue-50 lg:w-1/2 max-sm:w-full
           ${getStatusColor()}
         `}
         onDragOver={handleDragOver}

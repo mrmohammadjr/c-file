@@ -166,7 +166,7 @@ const Settings = ({ uploadedFile, fileDataURL }: SettingsProps) => {
         </div>
       )}
 
-      <div className="grid grid-cols-5 gap-5">
+      <div className=" grid lg:grid-cols-5 max-md:grid-cols-3 max-sm:grid-cols-1 gap-5">
         {ext.map((item) => {
           const Icons = item.icon;
           const isSelected = selectedFormat === item.type;
